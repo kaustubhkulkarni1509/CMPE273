@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./Styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+
+    <script>
+
+
+        function showcounter() {
+            document.getElementById("toshow").style.display = "block"
+            document.getElementById("toshow2").style.display = "block"
+            document.getElementById("localresult").innerHTML = localStorage.localcount;
+
+
+            if (sessionStorage.sessionCount) {
+                document.getElementById("sessionresult").innerHTML = sessionStorage.sessionCount;
+            } else {
+                document.getElementById("sessionresult").innerHTML = 0;
+            }
+
+            let location = ""
+            const processRequest = (e) => {
+
+                if (xhr.readyState == 4) {
+                    // time to partay!!!
+                    console.log(e.currentTarget.response)
+                    location = e.currentTarget.response
+                    location = JSON.parse(location)
+                    console.log(location.location.lat)
+
+
+                    document.getElementById("location_data").innerHTML = "Longitude and Latitude of the location that you are currently at are " + location.location.lng + " and " + location.location.lat;
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCN1SwyA0HqbjLWl11fcRAqAULtEYOV5BQ", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+
+            xhr.onreadystatechange = processRequest;
+
+
+        }
+
+        function IncreaseCounterLocal() {
+
+            if (localStorage.localcount) {
+                localStorage.localcount = Number(localStorage.localcount) + 1;
+            } else {
+                localStorage.localcount = 1;
+            }
+
+            document.getElementById("localresult").innerHTML = localStorage.localcount;
+
+        }
+
+        function DecreaseCounterLocal() {
+
+            if (localStorage.localcount) {
+                localStorage.localcount = Number(localStorage.localcount) - 1;
+            } else {
+                localStorage.localcount = -1;
+            }
+
+            document.getElementById("localresult").innerHTML = localStorage.localcount;
+
+        }
+
+        function IncreaseCounterSession() {
+            if (sessionStorage.sessionCount) {
+                sessionStorage.sessionCount = Number(sessionStorage.sessionCount) + 1
+            } else {
+                sessionStorage.sessionCount = 1
+            }
+
+            document.getElementById("sessionresult").innerHTML = sessionStorage.sessionCount;
+        }
+
+        function DecreaseCounterSession() {
+            if (sessionStorage.sessionCount) {
+                sessionStorage.sessionCount = Number(sessionStorage.sessionCount) - 1
+            } else {
+                sessionStorage.sessionCount = -1
+            }
+
+            document.getElementById("sessionresult").innerHTML = sessionStorage.sessionCount;
+        }
+
+
+
+    </script>
+</head>
+
+<body id="root" class="loader-active">
+
+    <div class="containerdiv">
+
+        <center>
+            <h1>Signup to play counter game</h1>
+        </center>
+        <br/>
+        <form onsubmit="showcounter();return false" id="document_form">
+
+
+            <div class="row">
+                <div class="col">
+                    <label for="firstname">First Name</label>
+                    <input type="text" id="firstname" class="form-control" placeholder="First name" autofocus required>
+                </div>
+                <div class="col">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" id="lastname" class="form-control" placeholder="Last name" required>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label for="emailaddress">Email address</label>
+                <input type="email" class="form-control" id="emailaddress" placeholder="Please enter email id" required>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label for="countrycode">Country Code</label>
+                <input type="text" pattern="[A-Za-z]{3}" title="Three letter country code" class="form-control"
+                    id="countrycode" placeholder="Please enter country code" required>
+            </div>
+
+            <br />
+
+            <center><button type="submit" class="btn btn-primary">Sign in</button></center>
+
+        </form>
+
+        <br />
+
+        <div class="toshow" id="toshow2" style="display:none">
+            <center>
+                <p id="location_data"></p>
+            </center>
+        </div>
+
+        <div class="toshow" id="toshow" style="display:none">
+
+
+
+            <div class="column" style="background-color: red;">
+
+                This is local storage counter
+
+                <h1 id="localresult"> </h1>
+                <div>
+                    <button onclick="IncreaseCounterLocal()" class="btn btn-secondary" type="button">Increase
+                        Counter</button>
+                    <button onclick="DecreaseCounterLocal()" class="btn btn-secondary" type="button">Decrease
+                        Counter</button>
+                </div>
+
+
+            </div>
+
+
+            <div class="column" style="background-color: green;">
+                This is session storage counter
+                <h1 id="sessionresult"> </h1>
+                <div>
+                    <button onclick="IncreaseCounterSession()" class="btn btn-secondary" type="button">Increase
+                        Counter</button>
+                    <button onclick="DecreaseCounterSession()" class="btn btn-secondary" type="button">Decrease
+                        Counter</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

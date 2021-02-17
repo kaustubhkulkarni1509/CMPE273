@@ -1,0 +1,29 @@
+body {
+  margin-top: 50px;
+  padding-top: 50px;
+  }
+
+.toshow{
+
+  height:50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  }
+
+
+  .containerdiv{
+    margin: 30px;
+  
+  }
